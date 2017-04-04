@@ -1,0 +1,83 @@
+<section>
+
+	<div class="alert alert-danger" ng-if="errorResponse">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Error!</strong> Could not retrieve weather data!
+	</div>
+	<h1 class="text-center"><i class="glyphicon glyphicon-refresh glyphicon-spin" ng-show="loading"></i></h1>
+	<!--
+
+	REMOVED... input box for allowing user to enter any zip code
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<form class="form-horizontal" ng-submit="getWeather()">
+				<fieldset>
+
+					<div class="form-group">
+						<label class="control-label">Zip Code</label>
+						<div class="input-group">
+							<input class="form-control" id="zip-code" placeholder="Zip Code" type="number" ng-model="zipCode" required>
+							<span class="input-group-btn">
+						  <button class="btn btn-default" type="button" ng-disabled="gettingGPSLocation" ng-click="getGPSLocation()">
+							  <i class="glyphicon glyphicon-screenshot" ng-hide="gettingGPSLocation"></i>
+							  <i class="glyphicon glyphicon-refresh glyphicon-spin" ng-show="gettingGPSLocation"></i>
+
+						  </button>
+						</span>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-md-2 col-md-offset-5">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	-->
+
+	<div class="row">
+		<div class="col-md-12" style="margin-top: 40px;">
+			<div ng-show="currentWeatherData">
+				<h4>Weather for <strong>{{ currentWeatherData.name }} ({{ zipCode }})</strong></h4>
+				<hr>
+				<h5>Currently</h5>
+
+				<div class="well text-center">
+					<img ng-src="http://openweathermap.org/img/w/{{ currentWeatherData.weather[0].icon }}.png" />
+					<h4>{{ currentWeatherData.main.temp | number: 0 }}° F</h4>
+					<h6>Humidity: {{ currentWeatherData.main.humidity | number: 0 }}%</h6>
+					<h6 style="text-transform: capitalize">{{ currentWeatherData.weather[0].description }}</h6>
+				</div>
+
+			</div>
+			<div ng-show="forecastData">
+				<h5>5 Day Forecast</h5>
+				<div class="well well-sm col-md-5ths text-center" ng-repeat="x in forecastData.list" style="border: 4px solid white">
+					<p><strong>{{ x.dt * 1000 | date:'MM-dd-yyyy' }}</strong></p>
+					<img ng-src="http://openweathermap.org/img/w/{{ x.weather[0].icon }}.png" />
+					<h4>{{ x.temp.min | number: 0 }}° F / {{ x.temp.max | number: 0 }}° F</h4>
+					<h6>Humidity: {{ x.humidity | number: 0 }}%</h6>
+					<h6 style="text-transform: capitalize">{{ x.weather[0].description }}</h6>
+				</div>
+			</div>
+
+			<div>
+
+				<div class="well well-sm col-md-5ths text-center" ng-repeat="(key, value) in tempMap" style="border: 4px solid white">
+					<p>{{ key }}</p>
+					<img ng-src="http://openweathermap.org/img/w/{{ x.weather[0].icon }}.png" />
+					<h4>{{value / numOfOccurencesMap[key] | number: 0 }}° F</h4>
+					<h6 style="text-transform: capitalize">{{ x.weather[0].description }}</h6>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+
